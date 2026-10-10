@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://umeta.frivaro.com/sitemap.xml

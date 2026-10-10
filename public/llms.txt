@@ -1,0 +1,7 @@
+# Umeta
+
+> Umeta is a free tool by Frivaro that inspects a file's hidden metadata (EXIF, GPS, author, software, etc.) and lets you remove it before sharing - entirely inside your browser. Nothing is ever uploaded.
+
+## Pages
+
+- [Umeta](https://umeta.frivaro.com/): Inspect a file's hidden metadata, choose what to remove, and download a cleaned copy.
