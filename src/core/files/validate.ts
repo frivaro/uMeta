@@ -1,5 +1,5 @@
 import type { FileValidationResult } from "./types";
-import { SUPPORTED_FILE_TYPES, findFileTypeByExtension } from "./registry";
+import { findFileTypeByExtension, getSupportedTypesLabel } from "./registry";
 
 /**
  * Validates a file against the registry of supported file types - not just trusting the
@@ -10,10 +10,9 @@ export function validateFile(fileName: string, bytes: Uint8Array): FileValidatio
   const fileType = findFileTypeByExtension(extension);
 
   if (!fileType) {
-    const supported = SUPPORTED_FILE_TYPES.map((type) => type.label).join(", ");
     return {
       valid: false,
-      reason: `This file type isn't supported yet - Umeta currently only works with ${supported} files.`,
+      reason: `This file type isn't supported yet - uMeta currently only works with ${getSupportedTypesLabel()} files.`,
     };
   }
 
@@ -29,5 +28,5 @@ export function validateFile(fileName: string, bytes: Uint8Array): FileValidatio
     return { valid: false, reason: `This file doesn't look like a valid ${fileType.label} file.` };
   }
 
-  return { valid: true };
+  return { valid: true, fileType };
 }

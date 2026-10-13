@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { CleaningSelection, InspectionResult, MetadataCategory, MetadataField } from "../../core/jpeg/types";
+import type { CleaningSelection, InspectionResult, MetadataCategory, MetadataField } from "../../core/metadata/types";
 import { CATEGORY_EXPLANATIONS, GENERIC_RECOMMENDATION } from "../../core/privacy/explain";
 
 interface InspectionReportProps {

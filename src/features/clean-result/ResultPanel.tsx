@@ -1,4 +1,4 @@
-import type { CleaningResult } from "../../core/jpeg/types";
+import type { CleaningResult } from "../../core/metadata/types";
 
 interface ResultPanelProps {
   fileName: string;

@@ -26,6 +26,12 @@
   margin: 0 0 0.4rem;
 }
 
+.dropzone-hint {
+  font-size: 0.78rem;
+  color: #8b8f98;
+  margin: 0;
+}
+
 .dropzone input[type="file"] {
   display: none;
 }
@@ -51,6 +57,7 @@
   font-weight: 500;
   font-size: 0.95rem;
   word-break: break-all;
+  margin-bottom: 0.3rem;
 }
 
 .file-summary-meta {

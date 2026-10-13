@@ -1,7 +1,8 @@
-import type { CleaningResult, CleaningSelection, MetadataField } from "./types";
+import type { CleaningResult, CleaningSelection, MetadataField } from "../../metadata/types";
 import { parseSegments, type JpegSegment } from "./segments";
 import { parseTiff, buildTiff, type IfdEntry } from "./tiff";
 import { categorizeIfd0Tag, categorizeExifSubIfdTag, ORIENTATION_TAG } from "./exifTags";
+import { concatUint8Arrays } from "../../files/bytes";
 
 const APP1 = 0xe1;
 const APP2 = 0xe2;
@@ -117,17 +118,6 @@ function wrapSegment(marker: number, payload: Uint8Array): Uint8Array {
   out[2] = (length >> 8) & 0xff;
   out[3] = length & 0xff;
   out.set(payload, 4);
-  return out;
-}
-
-function concatUint8Arrays(chunks: Uint8Array[]): Uint8Array {
-  const total = chunks.reduce((sum, chunk) => sum + chunk.byteLength, 0);
-  const out = new Uint8Array(total);
-  let offset = 0;
-  for (const chunk of chunks) {
-    out.set(chunk, offset);
-    offset += chunk.byteLength;
-  }
   return out;
 }
 

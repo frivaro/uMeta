@@ -4,6 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "license": "PolyForm-Noncommercial-1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frivaro/umeta.git"
+  },
+  "homepage": "https://umeta.frivaro.com",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

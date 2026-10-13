@@ -1,4 +1,4 @@
-// Minimal TIFF/EXIF IFD reader and writer, scoped to exactly what Umeta needs:
+// Minimal TIFF/EXIF IFD reader and writer, scoped to exactly what uMeta needs:
 // enumerate IFD0 / Exif SubIFD / GPS IFD / thumbnail (IFD1) entries, and rebuild a new,
 // smaller TIFF buffer with selected entries dropped. This never touches the JPEG's
 // compressed image data - it only operates on the APP1 "Exif\0\0" payload bytes.

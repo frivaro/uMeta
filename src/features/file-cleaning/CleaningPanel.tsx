@@ -1,17 +1,18 @@
 import { useMemo, useState } from "react";
-import type { CleaningResult, CleaningSelection, InspectionResult } from "../../core/jpeg/types";
-import { cleanJpeg } from "../../core/jpeg/clean";
-import { toArrayBuffer } from "../../core/jpeg/bytes";
+import type { CleaningResult, CleaningSelection, InspectionResult } from "../../core/metadata/types";
+import type { SupportedFileType } from "../../core/files/types";
+import { toArrayBuffer } from "../../core/files/bytes";
 import ConfirmDialog from "./ConfirmDialog";
 
 interface CleaningPanelProps {
   originalBytes: Uint8Array;
+  fileType: SupportedFileType;
   inspection: InspectionResult;
   selection: CleaningSelection;
   onCleaned: (result: CleaningResult, downloadUrl: string) => void;
 }
 
-export default function CleaningPanel({ originalBytes, inspection, selection, onCleaned }: CleaningPanelProps) {
+export default function CleaningPanel({ originalBytes, fileType, inspection, selection, onCleaned }: CleaningPanelProps) {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const removedCount = useMemo(
@@ -20,8 +21,8 @@ export default function CleaningPanel({ originalBytes, inspection, selection, on
   );
 
   const handleConfirm = () => {
-    const result = cleanJpeg(originalBytes, selection, inspection.fields);
-    const blob = new Blob([toArrayBuffer(result.cleanedBytes)], { type: "image/jpeg" });
+    const result = fileType.clean(originalBytes, selection, inspection.fields);
+    const blob = new Blob([toArrayBuffer(result.cleanedBytes)], { type: fileType.mimeType });
     const url = URL.createObjectURL(blob);
     setShowConfirm(false);
     onCleaned(result, url);

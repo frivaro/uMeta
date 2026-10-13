@@ -1,4 +1,5 @@
 import { useRef, useState, type DragEvent } from "react";
+import { getAcceptAttribute, getSupportedTypesLabel } from "../../core/files/registry";
 
 interface DropzoneProps {
   onFileSelected: (file: File) => void;
@@ -36,7 +37,13 @@ export default function Dropzone({ onFileSelected }: DropzoneProps) {
       }}
     >
       <p className="dropzone-title">Drop a file here, or click to choose one</p>
-      <input ref={inputRef} type="file" onChange={(event) => handleFiles(event.target.files)} />
+      <p className="dropzone-hint">Supported files: {getSupportedTypesLabel()}</p>
+      <input
+        ref={inputRef}
+        type="file"
+        accept={getAcceptAttribute()}
+        onChange={(event) => handleFiles(event.target.files)}
+      />
     </div>
   );
 }

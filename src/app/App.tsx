@@ -6,8 +6,8 @@ import InspectionReport from "../features/file-inspection/InspectionReport";
 import CleaningPanel from "../features/file-cleaning/CleaningPanel";
 import ResultPanel from "../features/clean-result/ResultPanel";
 import { validateFile } from "../core/files/validate";
-import { inspectJpeg } from "../core/jpeg/inspect";
-import type { CleaningResult, CleaningSelection, InspectionResult, MetadataCategory } from "../core/jpeg/types";
+import type { SupportedFileType } from "../core/files/types";
+import type { CleaningResult, CleaningSelection, InspectionResult, MetadataCategory } from "../core/metadata/types";
 
 const EMPTY_SELECTION: CleaningSelection = {
   location: false,
@@ -31,6 +31,7 @@ const FULL_SELECTION: CleaningSelection = {
 
 export default function App() {
   const [originalBytes, setOriginalBytes] = useState<Uint8Array | null>(null);
+  const [fileType, setFileType] = useState<SupportedFileType | null>(null);
   const [fileName, setFileName] = useState<string>("");
   const [validationError, setValidationError] = useState<string | null>(null);
   const [inspection, setInspection] = useState<InspectionResult | null>(null);
@@ -48,15 +49,16 @@ export default function App() {
     const buffer = new Uint8Array(await file.arrayBuffer());
     const validation = validateFile(file.name, buffer);
 
-    if (!validation.valid) {
+    if (!validation.valid || !validation.fileType) {
       setValidationError(validation.reason ?? "This file couldn't be read.");
       return;
     }
 
     setOriginalBytes(buffer);
+    setFileType(validation.fileType);
     setFileName(file.name);
 
-    const result = await inspectJpeg(file.name, buffer);
+    const result = await validation.fileType.inspect(file.name, buffer);
     setInspection(result);
   };
 
@@ -72,6 +74,7 @@ export default function App() {
   const handleStartOver = () => {
     if (cleanedDownloadUrl) URL.revokeObjectURL(cleanedDownloadUrl);
     setOriginalBytes(null);
+    setFileType(null);
     setFileName("");
     setValidationError(null);
     setInspection(null);
@@ -106,9 +109,10 @@ export default function App() {
               onToggleCategory={handleToggleCategory}
               onRemoveFile={handleStartOver}
               headerActions={
-                originalBytes && inspection.hasAnyMetadata ? (
+                originalBytes && fileType && inspection.hasAnyMetadata ? (
                   <CleaningPanel
                     originalBytes={originalBytes}
+                    fileType={fileType}
                     inspection={inspection}
                     selection={selection}
                     onCleaned={handleCleaned}

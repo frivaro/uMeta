@@ -1,5 +1,5 @@
-// Pure data types for the JPEG/EXIF engine. No React, no component state, no network -
-// everything here operates on bytes in, structured data out.
+// Pure data types shared by every file-type engine (JPEG/EXIF, PNG chunks, ...). No React,
+// no component state, no network - everything here operates on bytes in, structured data out.
 
 export type MetadataCategory =
   | "location"

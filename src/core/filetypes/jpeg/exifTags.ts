@@ -1,4 +1,4 @@
-import type { MetadataCategory } from "./types";
+import type { MetadataCategory } from "../../metadata/types";
 
 // Maps raw EXIF/TIFF tag IDs to the privacy category they belong to, for both display
 // grouping and selective-removal purposes. Orientation is deliberately excluded - it's
